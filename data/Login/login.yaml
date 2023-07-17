@@ -1,0 +1,64 @@
+# 公共参数
+case_common:
+  allureEpic: 中台接口测试案例
+  allureFeature: 登录模块
+  allureStory: 登录功能测试
+  excel_file_name: login.xlsx
+
+login_01:
+    parameterize: False
+    parameter_file_sheet_name:
+    host: ${{host()}}
+    url: /auth/oauth2/token
+    method: POST
+    detail: 正常登录
+    headers:
+#      Content-Type: multipart/form-data;
+       Authorization: Basic dGVzdDp0ZXN0
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: data
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      grant_type: password
+      scope: server
+      refresh_token:
+      username: 'admin'
+      password: 123456
+      # 是否有依赖业务，为空或者false则表示没有
+    dependence_case: False
+        # 依赖的数据
+    dependence_case_data:
+    assert:
+      status_code: 200
+      # 断言接口返回的username
+      username:
+        jsonpath: $.user_info.username
+        type: ==
+        value: 'admin'
+        AssertType:
+
+    sql:
+
+login_02:
+    parameterize: True
+    parameter_file_sheet_name: login
+    host: ${{host()}}
+    url: /auth/oauth2/token
+    method: POST
+    detail: 异常登录
+    headers:
+#      Content-Type: multipart/form-data;
+       Authorization: Basic dGVzdDp0ZXN0
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: data
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+    # 参数化
+    dependence_case: False
+        # 依赖的数据
+    dependence_case_data:
+    assert:
+    # 参数化
+    sql:

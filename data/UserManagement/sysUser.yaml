@@ -1,0 +1,87 @@
+# 公共参数
+case_common:
+  allureEpic: 中台接口测试案例
+  allureFeature: 用户管理模块
+  allureStory: 用户管理
+  excel_file_name: sysUser.xlsx
+
+new_users_01:
+    parameterize: False
+    parameter_file_sheet_name:
+    host: ${{host()}}
+    url: /admin/sysUser
+    method: POST
+    detail: 新增用户
+    headers:
+       Content-Type: application/json;
+       Authorization: $cache{get_token}
+    # 请求的数据，是 params 还是 json、或者file、data
+    requestType: json
+    # 是否执行，空或者 true 都会执行
+    is_run:
+    data:
+      userName: '{ont_existed_user}'
+      fullName: 'boo_yyt009'
+      phone: '{ont_existed_tel}'
+      password: 'admin'
+      roleDTOList: [{'roleId': 2, 'roleCode': 'GENERAL_USER'}]
+      # 是否有依赖业务，为空或者false则表示没有
+    dependence_case: False
+        # 依赖的数据
+    dependence_case_data:
+#      case_id: login_01
+#      dependence_data:
+#        dependence_type: response
+#        jsonpath: $.access_token
+#        set_cache: new_users_01_token
+    assert:
+      status_code: 200
+      # 断言接口返回的code
+      code:
+        jsonpath: $.code
+        type: ==
+        value: '0'
+        AssertType:
+
+    sql:
+
+#all_users_search_01:
+#    parameterize: False
+#    parameter_file_sheet_name:
+#    host: ${{host()}}
+#    url: /admin/sysUser
+#    method: GET
+#    detail: 所有用户查询
+#    headers:
+#       Content-Type:  application/x-www-form-urlencoded;
+#       Authorization: $cache{get_token}
+#    # 请求的数据，是 params 还是 json、或者file、data
+#    requestType: params
+#    # 是否执行，空或者 true 都会执行
+#    is_run:
+#    data:
+##      userName: '{ont_existed_user}'
+##      fullName: 'boo_yyt009'
+##      phone: '{ont_existed_tel}'
+##      password: 'admin'
+##      roleDTOList: [{'roleId': 2, 'roleCode': 'GENERAL_USER'}]
+#      # 是否有依赖业务，为空或者false则表示没有
+#    dependence_case: False
+#        # 依赖的数据
+#    dependence_case_data:
+##      case_id: login_01
+##      dependence_data:
+##        dependence_type: response
+##        jsonpath: $.access_token
+##        set_cache: new_users_01_token
+#    assert:
+#      status_code: 200
+#      # 断言接口返回的code
+##      code:
+##        jsonpath: $.code
+##        type: ==
+##        value: '0'
+##        AssertType:
+#
+#    sql:
+
